@@ -1,20 +1,23 @@
 # Counter header generator
 
 A small python-snippet that spits out a c-header that, for each inclusion, increments a define.
-This can be used as a workaround in some cases on older compilers that do not support __COUNTER__.
+This can be used as a workaround in some cases on older compilers that do not support \_\_COUNTER\_\_.
 
 
 # Usage
 
 --counter_name defines the name of the counter to define after the header has been included.
+
 --digits the amount of digits in the counter to support. --digits=1 will generate a counter that circulates on 0 - 9
 while --digits=3 circulates 0 - 999 etc.
 
-```
+```sh
 python counter_generator.py --counter_name=MY_COUNTER --digits=3 > my_counter.h
 ```
 
-```
+From code
+
+```c
 #define JOIN_SYMS(a,b) JOIN_SYMS_(a,b)
 #define JOIN_SYMS_(a,b) a##b
 
@@ -36,7 +39,7 @@ int main( int argc, char** argv )
   int JOIN_SYMS( unique_int_, MY_COUNTER ) = 0; // generates "int unique_int_6 = 0;"
   return 0;
 }
-```c
+```
 
 
 # LICENCE
